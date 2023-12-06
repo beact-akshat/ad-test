@@ -10,16 +10,15 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 const { ERRORLOG } = require('./middleware/logger')
-const { AllowOrigin, AllowHeader, AllowMethods, NODE_ENV } = process.env;
 
 const PORT = process.env.PORT || '6363'
 const HOST = process.env.HOST || 'localhost'
 
 // set headers for cors and others uses
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', AllowOrigin)
-    res.setHeader('Access-Control-Allow-Methods', AllowMethods)
-    res.setHeader('Access-Control-Allow-Headers', AllowHeader)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'Content-Type,Authorization')
+    res.setHeader('Access-Control-Allow-Headers', 'GET,DELETE,POST,PATCH,OPTIONS')
     res.set('Cache-Control', 'no-store, no-cache')
     res.set('Expires', '0')
     next()
