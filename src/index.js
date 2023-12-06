@@ -54,5 +54,5 @@ app.use('*', async (req, res) => {
 
 //uncatch error handle to prevent server crash
 process.on('uncaughtException', ((err, data) => {
-    ERRORLOG({ msg: err.message })
+    console.log({ msg: err.message })
 }));
