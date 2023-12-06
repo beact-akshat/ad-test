@@ -37,7 +37,7 @@ server.on('error', data => {
     process.exit()
 })
 server.on('listening', () => {
-    console.log(chalk.bold(chalk.red(NODE_ENV)), chalk.yellow('server on =>'), chalk.magenta(`http://${HOST}:${PORT}`), chalk.red(time));
+    console.log( chalk.yellow('server on =>'), chalk.magenta(`http://${HOST}:${PORT}`), chalk.red(time));
 })
 
 // heath check API route
