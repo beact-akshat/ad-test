@@ -32,8 +32,7 @@ app.use(
     helmet.contentSecurityPolicy({
         directives: {
             defaultSrc: ["'self'"],
-            connectSrc: ["'self'", 'ad-test-n94k.onrender.com', 'ad-test-n94k.onrender.com/api/google/products', 'https://ads.google.com', 'https://ad-test-n94k.onrender.com', 'https://ad-test-n94k.onrender.com/api/google/products', 'https://tpc.googlesyndication.com', 'https://pagead2.googlesyndication.com', 'https://csi.gstatic.com/csi', 'https://fonts.googleapis.com/css', 'https://fonts.googleapis.com/css2', 'https://vr.google.com/shaders/w/techspecs/'],
-            scriptSrc: ["'self'", 'ad-test-n94k.onrender.com', 'ad-test-n94k.onrender.com/api/google/products', 'https://ads.google.com', 'https://ad-test-n94k.onrender.com', 'https://ad-test-n94k.onrender.com/api/google/products', 'https://tpc.googlesyndication.com', 'https://pagead2.googlesyndication.com', 'https://csi.gstatic.com/csi', 'https://fonts.googleapis.com/css', 'https://fonts.googleapis.com/css2', 'https://vr.google.com/shaders/w/techspecs/']
+            connectSrc: ["'self'", 'ad-test-n94k.onrender.com', 'tpc.googlesyndication.com', '*.googlesyndication.com', '*.gstatic.com', '*.googleapis.com', '*.google.com'],
         },
     })
 );
