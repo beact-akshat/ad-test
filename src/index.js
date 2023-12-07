@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-const { ERRORLOG } = require('./middleware/logger')
+const { ERRORLOG, APILOG } = require('./middleware/logger')
 const { NODE_ENV } = process.env;
 
 const PORT = process.env.PORT || '6363'
@@ -54,7 +54,7 @@ server.on('listening', () => {
 })
 
 // heath check API route
-app.get('/api/health', async (req, res) => {
+app.get('/api/health', APILOG, async (req, res) => {
     res.status(200).send({ code: 200, success: true, message: 'ok' })
 });
 
