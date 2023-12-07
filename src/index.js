@@ -27,6 +27,11 @@ app.use((req, res, next) => {
     next()
 });
 
+app.use((req, res, next) => {
+    res.setHeader('Content-Security-Policy', "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:");
+    next();
+});
+
 // Use helmet middleware with CSP
 app.use(
     helmet.contentSecurityPolicy({
