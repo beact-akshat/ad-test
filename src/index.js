@@ -17,8 +17,8 @@ const HOST = process.env.HOST || 'localhost'
 // set headers for cors and others uses
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Methods', 'Content-Type,Authorization')
-    res.setHeader('Access-Control-Allow-Headers', 'GET,DELETE,POST,PATCH,OPTIONS')
+    res.setHeader('Access-Control-Allow-Methods', '*')
+    res.setHeader('Access-Control-Allow-Headers', '*')
     res.set('Cache-Control', 'no-store, no-cache')
     res.set('Expires', '0')
     next()
