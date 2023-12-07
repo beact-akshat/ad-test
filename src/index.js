@@ -34,11 +34,10 @@ app.use(
             scriptSrc: ["'self'", 'example.com'],
             styleSrc: ["'self'", 'fonts.googleapis.com'],
             fontSrc: ['fonts.gstatic.com'],
-            // Add more directives based on your application needs
+            connectSrc: ["'self'", 'ad-test-n94k.onrender.com'], // Add the allowed connect sourceslication needs
         },
     })
 );
-
 
 // all routes attach to server
 app.use('/api', route)
