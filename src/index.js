@@ -1,4 +1,5 @@
 const express = require('express')
+const helmet = require('helmet');
 const bodyParser = require('body-parser')
 require('dotenv').config()
 const chalk = require('chalk')
@@ -10,6 +11,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 const { ERRORLOG } = require('./middleware/logger')
+const { NODE_ENV } = process.env;
 
 const PORT = process.env.PORT || '6363'
 const HOST = process.env.HOST || 'localhost'
@@ -24,6 +26,20 @@ app.use((req, res, next) => {
     next()
 });
 
+// Use helmet middleware with CSP
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", 'example.com'],
+            styleSrc: ["'self'", 'fonts.googleapis.com'],
+            fontSrc: ['fonts.gstatic.com'],
+            // Add more directives based on your application needs
+        },
+    })
+);
+
+
 // all routes attach to server
 app.use('/api', route)
 
@@ -37,7 +53,7 @@ server.on('error', data => {
     process.exit()
 })
 server.on('listening', () => {
-    console.log( chalk.yellow('server on =>'), chalk.magenta(`http://${HOST}:${PORT}`), chalk.red(time));
+    console.log(chalk.bold(chalk.red(NODE_ENV)), chalk.yellow('server on =>'), chalk.magenta(`http://${HOST}:${PORT}`), chalk.red(time));
 })
 
 // heath check API route
@@ -54,5 +70,5 @@ app.use('*', async (req, res) => {
 
 //uncatch error handle to prevent server crash
 process.on('uncaughtException', ((err, data) => {
-    console.log({ msg: err.message })
+    ERRORLOG({ msg: err.message })
 }));
