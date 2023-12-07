@@ -19,7 +19,7 @@ module.exports = {
             return content.products.list({
                 auth: jwtClient,
                 merchantId: merchantId,
-                maxResults: 20
+                maxResults: 6
             })
                 .then(response => {
                     return response
