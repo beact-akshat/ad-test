@@ -37,8 +37,8 @@ app.use(
     helmet.contentSecurityPolicy({
         directives: {
             defaultSrc: ["'self'", 'blob:'],
-            connectSrc: ["'self'",'http://*/*', 'https://*/*'],
-            scriptSrc: ["'self'", 'http://*/*', 'https://*/*'],
+            connectSrc: ["'self'",'http://*/*', 'https://*/*', 'blob:'],
+            scriptSrc: ["'self'", 'http://*/*', 'https://*/*', 'blob:'],
         },
     })
 );
