@@ -31,7 +31,7 @@ app.use(
     helmet.contentSecurityPolicy({
         directives: {
             defaultSrc: ["'self'"],
-            connectSrc: ["'self'", 'https://ad-test-n94k.onrender.com/api/google/products', 'https://tpc.googlesyndication.com', 'https://pagead2.googlesyndication.com', 'blob:', 'data:', 'https://csi.gstatic.com/csi', 'https://fonts.googleapis.com/css', 'https://fonts.googleapis.com/css2', 'https://vr.google.com/shaders/w/techspecs/']
+            connectSrc: ["'self'", 'https://tpc.googlesyndication.com', 'https://pagead2.googlesyndication.com', 'blob:', 'data:', 'https://csi.gstatic.com/csi', 'https://fonts.googleapis.com/css', 'https://fonts.googleapis.com/css2', 'https://vr.google.com/shaders/w/techspecs/']
         },
     })
 );
