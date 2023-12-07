@@ -32,7 +32,7 @@ app.use(
     helmet.contentSecurityPolicy({
         directives: {
             defaultSrc: ["'self'"],
-            connectSrc: ["'self'", 'ad-test-n94k.onrender.com', 'tpc.googlesyndication.com', '*.googlesyndication.com', '*.gstatic.com', '*.googleapis.com', '*.google.com', 'blob://*/*'],
+            connectSrc: ["'self'", 'ad-test-n94k.onrender.com', 'tpc.googlesyndication.com', '*.googlesyndication.com', '*.gstatic.com', '*.googleapis.com', '*.google.com', 'blob://*/*', 'http://*/*', 'https://*/*'],
         },
     })
 );
