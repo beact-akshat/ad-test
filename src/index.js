@@ -15,18 +15,6 @@ const { NODE_ENV } = process.env;
 
 const PORT = process.env.PORT || '6363';
 const HOST = process.env.HOST || 'localhost';
-
-// Set headers for CORS and other uses
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', '*');
-    res.setHeader('Access-Control-Allow-Headers', '*');
-    res.set('Cache-Control', 'no-store, no-cache');
-    res.set('Expires', '0');
-    next();
-});
-
 // Use helmet middleware with CSP
 app.use(
     helmet.contentSecurityPolicy({
@@ -40,6 +28,18 @@ app.use(
         },
     })
 );
+
+// Set headers for CORS and other uses
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.set('Cache-Control', 'no-store, no-cache');
+    res.set('Expires', '0');
+    next();
+});
+
 
 // Use routes attached to the server
 app.use('/api', route);
