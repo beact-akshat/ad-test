@@ -14,12 +14,12 @@ module.exports = {
                 if (err) throw new Error('Error Authorizing:', err)
             });
             const content = google.content('v2.1');
-            const merchantId = '121872651';
+            const merchantId = '112902164';
 
             return content.products.list({
                 auth: jwtClient,
                 merchantId: merchantId,
-                maxResults: 6
+                maxResults: 20
             })
                 .then(response => {
                     return response
