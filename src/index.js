@@ -15,19 +15,17 @@ const { NODE_ENV } = process.env;
 
 const PORT = process.env.PORT || '6363';
 const HOST = process.env.HOST || 'localhost';
+
 // Use helmet middleware with CSP
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
             defaultSrc: ["'self'"],
-            connectSrc: [
-                "'self'",
-                'ad-test-n94k.onrender.com', // Include the necessary domains here
-                // Add other allowed sources as needed...
-            ],
-        },
+            connectSrc: ["'self'", 'ad-test-n94k.onrender.com', 'tpc.googlesyndication.com', 'pagead2.googlesyndication.com', 'csi.gstatic.com/csi', 'fonts.googleapis.com/css', 'fonts.googleapis.com/css2', 'vr.google.com/shaders/w/techspecs/']
+        }
     })
 );
+
 
 // Set headers for CORS and other uses
 app.use((req, res, next) => {
