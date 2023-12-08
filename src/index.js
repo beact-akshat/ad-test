@@ -16,22 +16,22 @@ const { NODE_ENV } = process.env;
 const PORT = process.env.PORT || '6363';
 const HOST = process.env.HOST || 'localhost';
 
-app.use(
-    helmet({
-        contentSecurityPolicy: false,
-    })
-)
+// app.use(
+//     helmet({
+//         contentSecurityPolicy: false,
+//     })
+// )
 
-// Set headers for CORS and other uses
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', '*');
-    res.setHeader('Access-Control-Allow-Headers', '*');
-    res.set('Cache-Control', 'no-store, no-cache');
-    res.set('Expires', '0');
-    next();
-});
+// // Set headers for CORS and other uses
+// app.use((req, res, next) => {
+//     res.setHeader('Access-Control-Allow-Credentials', 'true');
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     res.setHeader('Access-Control-Allow-Methods', '*');
+//     res.setHeader('Access-Control-Allow-Headers', '*');
+//     res.set('Cache-Control', 'no-store, no-cache');
+//     res.set('Expires', '0');
+//     next();
+// });
 
 
 // Use routes attached to the server
