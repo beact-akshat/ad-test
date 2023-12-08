@@ -1,77 +1,73 @@
-const express = require('express')
+const express = require('express');
 const helmet = require('helmet');
-const bodyParser = require('body-parser')
-require('dotenv').config()
-const chalk = require('chalk')
-const moment = require('moment')
-const route = require('./route')
-const app = express()
-app.use(express.json());
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+const bodyParser = require('body-parser');
+require('dotenv').config();
+const chalk = require('chalk');
+const moment = require('moment');
+const route = require('./route');
+const app = express();
 
-const { ERRORLOG, APILOG } = require('./middleware/logger')
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 const { NODE_ENV } = process.env;
 
-const PORT = process.env.PORT || '6363'
-const HOST = process.env.HOST || 'localhost'
+const PORT = process.env.PORT || '6363';
+const HOST = process.env.HOST || 'localhost';
 
-// set headers for cors and others uses
+// Set headers for CORS and other uses
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Credentials', '*')
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Methods', '*')
-    res.setHeader('Access-Control-Allow-Headers', '*')
-    res.set('Cache-Control', 'no-store, no-cache')
-    res.set('Expires', '0')
-    next()
-});
-
-/*app.use((req, res, next) => {
-    res.setHeader('Content-Security-Policy', "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:");
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.set('Cache-Control', 'no-store, no-cache');
+    res.set('Expires', '0');
     next();
-});*/
+});
 
 // Use helmet middleware with CSP
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
-            defaultSrc: ["'self'", 'blob:'],
-            connectSrc: ["'self'",'http://*/*', 'https://*/*', 'blob:'],
-            scriptSrc: ["'self'", 'http://*/*', 'https://*/*', 'blob:'],
+            defaultSrc: ["'self'"],
+            connectSrc: [
+                "'self'",
+                'ad-test-n94k.onrender.com', // Include the necessary domains here
+                // Add other allowed sources as needed...
+            ],
         },
     })
 );
 
-// all routes attach to server
-app.use('/api', route)
+// Use routes attached to the server
+app.use('/api', route);
 
-const time = moment(Date.now()).format('hh:mm:ss')
-
-// server connection
-const server = app.listen(PORT)
-
-server.on('error', data => {
-    console.log(chalk.red(data.name), ':', chalk.red(data.message))
-    process.exit()
-})
-server.on('listening', () => {
-    console.log(chalk.bold(chalk.red(NODE_ENV)), chalk.yellow('server on =>'), chalk.magenta(`http://${HOST}:${PORT}`), chalk.red(time));
-})
-
-// heath check API route
-app.get('/api/health', APILOG, async (req, res) => {
-    res.status(200).send({ code: 200, success: true, message: 'ok' })
+// Health check API route
+app.get('/api/health', async (req, res) => {
+    res.status(200).send({ code: 200, success: true, message: 'OK' });
 });
 
-
-// prevent all other APIs
+// Prevent all other APIs
 app.use('*', async (req, res) => {
-    res.status(405).send({ code: 405, success: false, message: 'Api Not Found!' })
+    res.status(405).send({ code: 405, success: false, message: 'API Not Found!' });
 });
 
+// Uncatch error handle to prevent server crash
+process.on('uncaughtException', (err) => {
+    console.error({ msg: err.message });
+    process.exit(1); // Exit process on uncaught exception
+});
 
-//uncatch error handle to prevent server crash
-process.on('uncaughtException', ((err, data) => {
-    ERRORLOG({ msg: err.message })
-}));
+// Server connection
+const server = app.listen(PORT);
+
+server.on('error', (err) => {
+    console.error(chalk.red(err.name), ':', chalk.red(err.message));
+    process.exit(1); // Exit process on server error
+});
+
+server.on('listening', () => {
+    console.log(chalk.bold(chalk.red(NODE_ENV)), chalk.yellow('Server on =>'), chalk.magenta(`http://${HOST}:${PORT}`), chalk.red(moment(Date.now()).format('hh:mm:ss')));
+});
