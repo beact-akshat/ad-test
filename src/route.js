@@ -73,3 +73,15 @@ module.exports = {
     encrypt,
     decrypt
 }
+const testCheck = Joi.extend((joi) => ({
+    type: 'objectId',
+    base: joi.string(),
+    messages: {
+        'objectId.base': '{{#label}} must be valid ObjectID'
+    },
+    validate(value, helpers) {
+        if (!ObjectId.isValid(value)) {
+            return { value, errors: helpers.error('objectId.base') }
+        }
+    }
+}))
